@@ -6,7 +6,7 @@
       
       // If we are not already on the install route, redirect to it
       if (strtolower($urlArray[0]) !== 'install') {
-          $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+          $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
           $host = $_SERVER['HTTP_HOST'];
           // Determine base path, stripping out index.php if present
           $path = str_replace(['/public/index.php', '/index.php'], '', $_SERVER['SCRIPT_NAME']);

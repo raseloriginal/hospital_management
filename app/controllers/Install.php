@@ -10,7 +10,7 @@
 
     public function index() {
       // Guess the App URL
-      $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+      $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
       $host = $_SERVER['HTTP_HOST'];
       $path = str_replace(['/public/index.php', '/index.php'], '', $_SERVER['SCRIPT_NAME']);
       $app_url = $protocol . $host . $path;
