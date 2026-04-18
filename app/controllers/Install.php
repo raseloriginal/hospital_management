@@ -32,7 +32,7 @@
         $app_url = trim($_POST['app_url']);
         $db_host = trim($_POST['db_host']);
         $db_user = trim($_POST['db_user']);
-        $db_pass = trim($_POST['db_pass']);
+        $db_pass = $_POST['db_pass']; // Do not trim password in case it has intentional spaces
         $db_name = trim($_POST['db_name']);
 
         try {
