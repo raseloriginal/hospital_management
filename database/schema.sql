@@ -157,6 +157,6 @@ CREATE TABLE `payments` (
 
 -- Seed Admin User (password: admin123)
 INSERT INTO `users` (`name`, `email`, `password`, `role`) VALUES 
-('System Admin', 'admin@healthcare.com', '$2y$10$0zX7f7O8Wp6J0nN1fV.oHeP6YF.rP6fK7E1.X.p8Pz2/vIeY6S7Lq', 'admin');
+('System Admin', 'admin@healthcare.com', '$2y$10$9Il41TLgksbEPO6C.AIhGu/.MDAPnZDALgjPFCQHGI335aKTsBuy6', 'admin');
 
 COMMIT;

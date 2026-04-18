@@ -58,9 +58,12 @@
 </head>
 <body class="<?php echo isLoggedIn() ? 'bg-slate-100' : 'bg-white'; ?>">
 <?php if(isLoggedIn()) : ?>
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex h-screen overflow-hidden w-full relative">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 z-40 hidden md:hidden transition-opacity"></div>
+
         <!-- Sidebar -->
-        <aside class="w-64 bg-slate-800 text-white flex-shrink-0 hidden md:flex flex-col border-r border-slate-700">
+        <aside id="mainSidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-800 text-white flex-shrink-0 flex flex-col border-r border-slate-700 transition-transform duration-300 transform -translate-x-full md:relative md:translate-x-0">
             <div class="p-6 flex items-center space-x-3 bg-slate-900 border-b border-slate-700">
                 <div class="bg-[#217346] p-2 rounded-md">
                     <i class="fas fa-hospital text-xl"></i>
@@ -150,7 +153,7 @@
             <!-- Header -->
             <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-8 z-10">
                 <div class="flex items-center">
-                    <button class="md:hidden text-slate-600 mr-4">
+                    <button id="sidebarToggleBtn" class="md:hidden text-slate-600 mr-4 focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h2 class="text-lg font-semibold text-slate-800">
