@@ -36,16 +36,23 @@
         $db_name = trim($_POST['db_name']);
 
         try {
-          // 1. Connect without Database Name to create the DB if it doesn't exist
-          $pdo = new PDO("mysql:host=" . $db_host, $db_user, $db_pass);
-          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          
-          // Create database
-          $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;");
-
-          // 2. Connect directly to the database
-          $pdo = new PDO("mysql:host=" . $db_host . ";dbname=" . $db_name, $db_user, $db_pass);
-          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          // 1. Try connecting directly to the specific database first (Required for cPanel/Shared Hosting)
+          try {
+            $pdo = new PDO("mysql:host=" . $db_host . ";dbname=" . $db_name, $db_user, $db_pass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          } catch(PDOException $e) {
+            // Error 1049 is 'Unknown database'
+            if ($e->getCode() == 1049) {
+                // Try connecting without dbname and creating it (for local XAMPP/WAMP setups)
+                $pdo = new PDO("mysql:host=" . $db_host, $db_user, $db_pass);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db_name` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;");
+                $pdo->exec("USE `$db_name`;");
+            } else {
+                // If it's 1045 (Access Denied) or other, throw it to the main catch block
+                throw $e;
+            }
+          }
 
           // 3. Execute SQL Files
           $sql_files = [
