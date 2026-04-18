@@ -74,14 +74,14 @@
           $config_path = '../app/config/config.php';
           $config_str = file_get_contents($config_path);
 
-          $config_str = preg_replace("/define\('DB_HOST',\s*'.*?'\);/", "define('DB_HOST', '$db_host');", $config_str);
-          $config_str = preg_replace("/define\('DB_USER',\s*'.*?'\);/", "define('DB_USER', '$db_user');", $config_str);
-          $config_str = preg_replace("/define\('DB_PASS',\s*'.*?'\);/", "define('DB_PASS', '$db_pass');", $config_str);
-          $config_str = preg_replace("/define\('DB_NAME',\s*'.*?'\);/", "define('DB_NAME', '$db_name');", $config_str);
+          $config_str = preg_replace("/define\('DB_HOST',\s*'.*?'\);/", "define('DB_HOST', '" . addslashes($db_host) . "');", $config_str);
+          $config_str = preg_replace("/define\('DB_USER',\s*'.*?'\);/", "define('DB_USER', '" . addslashes($db_user) . "');", $config_str);
+          $config_str = preg_replace("/define\('DB_PASS',\s*'.*?'\);/", "define('DB_PASS', '" . addslashes($db_pass) . "');", $config_str);
+          $config_str = preg_replace("/define\('DB_NAME',\s*'.*?'\);/", "define('DB_NAME', '" . addslashes($db_name) . "');", $config_str);
           
           // Sanitize app_url (remove trailing slash)
           $app_url = rtrim($app_url, '/');
-          $config_str = preg_replace("/define\('URLROOT',\s*'.*?'\);/", "define('URLROOT', '$app_url');", $config_str);
+          $config_str = preg_replace("/define\('URLROOT',\s*'.*?'\);/", "define('URLROOT', '" . addslashes($app_url) . "');", $config_str);
 
           file_put_contents($config_path, $config_str);
 
