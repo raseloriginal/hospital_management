@@ -99,7 +99,7 @@
             'db_user' => $db_user,
             'db_pass' => $db_pass,
             'db_name' => $db_name,
-            'error' => 'Database Error: ' . $e->getMessage()
+            'error' => 'Connection Failed! Attempted Host: "' . $db_host . '", User: "' . $db_user . '", DB: "' . $db_name . '", Password Length: ' . strlen($db_pass) . '. Error Detail: ' . $e->getMessage()
           ];
           $this->view('install/index', $data);
         } catch(Exception $e) {
